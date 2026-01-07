@@ -7,13 +7,14 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - pip install -r requirements.txt
-      # --- NEW: Install Trivy Security Scanner ---
       - echo "Installing Trivy..."
       - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
 
   pre_build:
     commands:
-      # --- NEW: Run Security Scan on Files ---
+      - echo "Logging in to Amazon ECR..."
+      # Uses the AWS Region automatically from the build environment
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 062822872271.dkr.ecr.ap-south-1.amazonaws.com/devsecops-app
       - echo "Scanning code for vulnerabilities..."
       - trivy fs . --exit-code 1 --severity HIGH,CRITICAL
 
@@ -21,8 +22,12 @@ phases:
     commands:
       - echo "Building the Docker image..."
       - docker build -t devsecops-app .
+      - echo "Tagging image..."
+      # We tag the local image with the ECR address
+      - docker tag devsecops-app:latest 062822872271.dkr.ecr.ap-south-1.amazonaws.com/devsecops-app:latest
 
   post_build:
     commands:
+      - echo "Pushing the Docker image..."
+      - docker push 062822872271.dkr.ecr.ap-south-1.amazonaws.com/devsecops-app:latest
       - echo "Build completed successfully!"
-
