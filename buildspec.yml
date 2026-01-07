@@ -15,7 +15,7 @@ phases:
     commands:
       # --- NEW: Run Security Scan on Files ---
       - echo "Scanning code for vulnerabilities..."
-      - trivy fs . --exit-code 0 --severity HIGH,CRITICAL
+      - trivy fs . --exit-code 1 --severity HIGH,CRITICAL
 
   build:
     commands:
@@ -25,3 +25,4 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
+
