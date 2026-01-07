@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DevSecOps Monitor</title>
+    <style>
+        body { font-family: 'Courier New', monospace; background-color: #0d1117; color: #c9d1d9; padding: 50px; }
+        .container { border: 1px solid #30363d; padding: 20px; border-radius: 6px; max-width: 600px; margin: auto; }
+        h1 { color: #58a6ff; }
+        .status { font-weight: bold; color: #2ea043; } /* Green for passing */
+        .metric { margin: 10px 0; }
+        .footer { margin-top: 20px; font-size: 0.8em; color: #8b949e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ System Security Status</h1>
+        <p>Pipeline Integration: <span class="status">ACTIVE</span></p>
+        <hr style="border-color: #30363d;">
+        <div class="metric">Deployment Environment: <b>AWS Fargate</b></div>
+        <div class="metric">Container Scan: <b>Trivy (PASSED)</b></div>
+        <div class="metric">Vulnerability Tolerance: <b>Zero High/Critical</b></div>
+        <div class="footer">
+            Managed by AWS CodeBuild & DevSecOps Pipeline
+        </div>
+    </div>
+</body>
+</html>
